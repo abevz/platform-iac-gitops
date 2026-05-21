@@ -1,0 +1,31 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-image-signature
+  annotations:
+    policies.kyverno.io/title: Require Cosign Image Signature
+    policies.kyverno.io/description: >-
+      Images deployed to the demo-app namespace must be signed with the
+      cosign private key. Unsigned images are rejected. Switch to Enforce
+      after the GitLab CI pipeline produces signed images.
+spec:
+  validationFailureAction: Audit
+  background: false
+  rules:
+    - name: verify-cosign-signature
+      match:
+        any:
+          - resources:
+              kinds: [Pod]
+              namespaces: [demo-app]
+      verifyImages:
+        - imageReferences:
+            - "harbor.bevz.dev/*"
+          attestors:
+            - count: 1
+              entries:
+                - keys:
+                    publicKeys: |-
+                      -----BEGIN PUBLIC KEY-----
+                      PLACEHOLDER_REPLACE_WITH_COSIGN_PUB_CONTENT
+                      -----END PUBLIC KEY-----
