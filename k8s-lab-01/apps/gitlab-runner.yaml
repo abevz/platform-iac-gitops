@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://charts.gitlab.io
     chart: gitlab-runner
-    targetRevision: "0.75.3"
+    targetRevision: "0.88.3"
     helm:
       valuesObject:
         gitlabUrl: https://gitlab.bevz.net
