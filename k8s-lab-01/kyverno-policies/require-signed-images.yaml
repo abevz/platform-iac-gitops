@@ -27,5 +27,6 @@ spec:
                 - keys:
                     publicKeys: |-
                       -----BEGIN PUBLIC KEY-----
-                      PLACEHOLDER_REPLACE_WITH_COSIGN_PUB_CONTENT
+                      MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAECYpGlwxroWiS7DyAoKBBYMfCZcbH
+                      PYAyrCkrhIG1BJNT4E2o1ojAf20O9pVjexQ/AgWZf0DTkeuF62ukArovJQ==
                       -----END PUBLIC KEY-----
