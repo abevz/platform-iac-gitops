@@ -5,6 +5,8 @@ metadata:
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/compare-options: ServerSideDiff=true,IncludeMutationWebhook=true
 spec:
   project: platform-lab
   source:
@@ -12,7 +14,11 @@ spec:
     chart: kyverno
     targetRevision: 3.2.8
     helm:
-      valuesObject:
+      values: |
+        webhookLabels:
+          app.kubernetes.io/managed-by: argocd
+        config:
+          preserve: false
         admissionController:
           replicas: 1
         backgroundController:
@@ -30,3 +36,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true
