@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: democicd
-          image: harbor.bevz.net/demo/democicd:latest
+          image: harbor.bevz.net/demo/democicd:6b006796
           ports:
             - containerPort: 8080
           env:
