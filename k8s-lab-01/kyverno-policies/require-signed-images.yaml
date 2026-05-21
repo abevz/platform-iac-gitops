@@ -20,7 +20,7 @@ spec:
               namespaces: [demo-app]
       verifyImages:
         - imageReferences:
-            - "harbor.bevz.dev/*"
+            - "harbor.bevz.net/*"
           mutateDigest: false
           attestors:
             - count: 1
