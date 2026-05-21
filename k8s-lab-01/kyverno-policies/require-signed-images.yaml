@@ -21,6 +21,9 @@ spec:
       verifyImages:
         - imageReferences:
             - "harbor.bevz.net/*"
+          imageRegistryCredentials:
+            secrets:
+              - harbor-registry-creds
           mutateDigest: false
           attestors:
             - count: 1
