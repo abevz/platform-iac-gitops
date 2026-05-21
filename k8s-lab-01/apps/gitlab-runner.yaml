@@ -29,6 +29,11 @@ spec:
                 namespace = "gitlab-runner"
                 image = "alpine:3.19"
                 pull_policy = ["if-not-present"]
+
+                [[runners.kubernetes.volumes.secret]]
+                  name = "harbor-docker-config"
+                  mount_path = "/kaniko/.docker"
+                  read_only = true
   destination:
     server: https://kubernetes.default.svc
     namespace: gitlab-runner
