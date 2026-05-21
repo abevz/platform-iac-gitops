@@ -10,6 +10,7 @@ spec:
     - https://kubernetes-sigs.github.io/metrics-server/
     - https://prometheus-community.github.io/helm-charts
     - https://kyverno.github.io/kyverno/
+    - https://charts.gitlab.io
   destinations:
     - namespace: "*"
       server: https://kubernetes.default.svc
