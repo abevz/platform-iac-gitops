@@ -13,14 +13,16 @@ spec:
       labels:
         app: democicd
     spec:
+      imagePullSecrets:
+        - name: registry-creds
       containers:
         - name: democicd
-          image: harbor.bevz.net/demo/democicd:6b006796
+          image: harbor.bevz.net/demo/democicd@sha256:13a6d09012b0a46180ef8b4bccb9ba8e79fb0254c2602cb0cd4deac1e8143898
           ports:
             - containerPort: 8080
           env:
             - name: APP_VERSION
-              value: "latest"
+              value: "6b006796"
           resources:
             requests:
               cpu: 50m
