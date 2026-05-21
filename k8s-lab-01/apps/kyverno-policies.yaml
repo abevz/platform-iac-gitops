@@ -20,3 +20,10 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - RespectIgnoreDifferences=true
+  ignoreDifferences:
+    - group: kyverno.io
+      kind: ClusterPolicy
+      jsonPointers:
+        - /status
+        - /metadata/annotations/policies.kyverno.io~1last-applied-patches
