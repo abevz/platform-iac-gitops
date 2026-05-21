@@ -32,7 +32,7 @@ spec:
 
                 [[runners.kubernetes.volumes.secret]]
                   name = "harbor-docker-config"
-                  mount_path = "/kaniko/.docker"
+                  mount_path = "/dockerconfig"
                   read_only = true
   destination:
     server: https://kubernetes.default.svc
