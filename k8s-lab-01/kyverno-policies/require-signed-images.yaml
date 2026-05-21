@@ -21,6 +21,7 @@ spec:
       verifyImages:
         - imageReferences:
             - "harbor.bevz.dev/*"
+          mutateDigest: false
           attestors:
             - count: 1
               entries:
