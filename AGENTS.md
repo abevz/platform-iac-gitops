@@ -1,12 +1,12 @@
-# platform-iac-gitops - Local AI Agent Guide
+# platform-iac-gitops - AI Agent Guide
 
-This file provides local guidance to AI coding agents working in
-`/home/abevz/github/platform-iac-gitops/main`.
+This file provides repository guidance to AI coding agents working in
+`/home/abevz/github/platform-iac-gitops`.
 
-## Local-Only File
+## Instruction Files
 
-- Do not add `AGENTS.md` or `CLAUDE.md` to git.
-- Keep this file local to the workspace.
+- `AGENTS.md` is tracked in git and lives on `main` so new worktrees inherit it.
+- `CLAUDE.md` should point to `AGENTS.md`.
 
 ## Git Workflow
 
@@ -14,9 +14,13 @@ This file provides local guidance to AI coding agents working in
 - Bare repo path: `/home/abevz/github/platform-iac-gitops/.bare`
 - Main worktree path: `/home/abevz/github/platform-iac-gitops/main`
 - Treat `main` as read, update, and status only.
+- Keep repository-wide instruction files in `main` so every new worktree starts
+  with the same baseline.
 - Make changes on feature branches in sibling worktrees under
   `/home/abevz/github/platform-iac-gitops/`.
 - One task means one branch, one sibling worktree, and one merge request.
+- Create new worktrees from `main`, then do task changes inside that sibling
+  worktree.
 - Do not push directly to `main`.
 - Remove completed worktrees with `git worktree remove`, not raw directory
   deletion.
