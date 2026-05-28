@@ -1,0 +1,46 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gitlab-runner
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: platform-lab
+  source:
+    repoURL: https://charts.gitlab.io
+    chart: gitlab-runner
+    targetRevision: "0.88.3"
+    helm:
+      valuesObject:
+        gitlabUrl: https://gitlab.example.com
+        rbac:
+          create: true
+        runners:
+          secret: gitlab-runner-secret
+          executor: kubernetes
+          namespace: gitlab-runner
+          locked: false
+          tags: "k8s,kubernetes"
+          privileged: false
+          config: |
+            [[runners]]
+              [runners.kubernetes]
+                namespace = "gitlab-runner"
+                image = "alpine:3.19"
+                pull_policy = ["if-not-present", "always"]
+                allowed_pull_policies = ["if-not-present", "always"]
+
+                [[runners.kubernetes.volumes.secret]]
+                  name = "harbor-docker-config"
+                  mount_path = "/dockerconfig"
+                  read_only = true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gitlab-runner
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
