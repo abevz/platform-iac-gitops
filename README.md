@@ -62,3 +62,4 @@ k8s-lab-01/
 ## Related
 
 - [platform-iac](https://github.com/abevz/platform-iac) — OpenTofu + Ansible provisioning (VMs, Kubernetes bootstrap, Vault, Harbor, monitoring)
+- [democicd](https://github.com/abevz/democicd) — demo Go app with full supply chain: kaniko → Trivy → cosign → GitOps deploy
