@@ -9,7 +9,7 @@ spec:
   project: platform-lab
   source:
     repoURL: https://gitlab.bevz.net/abevz/platform-iac-gitops.git
-    path: k8s-lab-01/guestdemo
+    path: k8s-lab-01/guestbook
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
