@@ -12,7 +12,7 @@ spec:
       name: https
       protocol: HTTPS
     hosts:
-    - "*.k8s.bevz.net"
+    - "*.k8s.example.com"
     tls:
       mode: SIMPLE
       credentialName: k8s-bevz-net-wildcard-tls

@@ -9,4 +9,4 @@ spec:
     name: letsencrypt-cloudflare
     kind: ClusterIssuer
   dnsNames:
-  - "*.k8s.bevz.net"
+  - "*.k8s.example.com"

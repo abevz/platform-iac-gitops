@@ -17,7 +17,7 @@ spec:
         - name: registry-creds
       containers:
         - name: democicd
-          image: harbor.bevz.net/demo/democicd@sha256:174d4e395377aaf588d00f62690324c3938386550b7ec7e2478b56fbf074834d
+          image: harbor.example.com/demo/democicd@sha256:174d4e395377aaf588d00f62690324c3938386550b7ec7e2478b56fbf074834d
           ports:
             - containerPort: 8080
           env:

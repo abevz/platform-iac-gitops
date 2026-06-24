@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
 spec:
   hosts:
-  - argocd.k8s.bevz.net
+  - argocd.k8s.example.com
   gateways:
   - argocd-gateway
   http:

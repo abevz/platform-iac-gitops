@@ -13,7 +13,7 @@ spec:
     targetRevision: "0.88.3"
     helm:
       valuesObject:
-        gitlabUrl: https://gitlab.bevz.net
+        gitlabUrl: https://gitlab.example.com
         rbac:
           create: true
         runners:

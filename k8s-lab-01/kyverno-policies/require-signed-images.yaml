@@ -20,7 +20,7 @@ spec:
               namespaces: [demo-app]
       verifyImages:
         - imageReferences:
-            - "harbor.bevz.net/*"
+            - "harbor.example.com/*"
           imageRegistryCredentials:
             secrets:
               - harbor-registry-creds
