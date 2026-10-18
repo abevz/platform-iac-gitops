@@ -1,0 +1,51 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nvidia-device-plugin
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: platform-lab
+  sources:
+    - repoURL: https://nvidia.github.io/k8s-device-plugin
+      chart: nvidia-device-plugin
+      targetRevision: 0.20.1
+      helm:
+        # One GTX 1660 SUPER (6 GB) shared by time-slicing: 4 schedulable nvidia.com/gpu,
+        # no memory isolation between the pods that share it.
+        values: |
+          runtimeClassName: nvidia
+          nodeSelector:
+            nvidia.com/gpu.present: "true"
+          tolerations:
+            - key: nvidia.com/gpu
+              operator: Exists
+              effect: NoSchedule
+          gfd:
+            enabled: false
+          config:
+            map:
+              default: |-
+                version: v1
+                flags:
+                  migStrategy: none
+                sharing:
+                  timeSlicing:
+                    renameByDefault: false
+                    failRequestsGreaterThanOne: true
+                    resources:
+                      - name: nvidia.com/gpu
+                        replicas: 4
+    - repoURL: https://gitlab.example.com/abevz/platform-iac-gitops.git
+      targetRevision: main
+      path: lab-cluster/nvidia-gpu
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: nvidia-device-plugin
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

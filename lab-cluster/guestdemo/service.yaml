@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: guestdemo
+  labels:
+    app.kubernetes.io/name: guestdemo
+spec:
+  selector:
+    app.kubernetes.io/name: guestdemo
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

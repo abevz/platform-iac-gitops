@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: argocd-vs
+  namespace: argocd
+spec:
+  hosts:
+  - argocd.k8s.example.com
+  gateways:
+  - argocd-gateway
+  http:
+  - headers:
+      response:
+        set:
+          strict-transport-security: "max-age=31536000"
+          x-content-type-options: "nosniff"
+          referrer-policy: "strict-origin-when-cross-origin"
+    route:
+    - destination:
+        host: argocd-server
+        port:
+          number: 80

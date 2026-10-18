@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vector-reranker
+  namespace: vector
+  labels:
+    networking.platform.example.com/l2-announce: "true"
+  annotations:
+    # Fixed address: vector-indexer config.yaml points here
+    lbipam.cilium.io/ips: 192.0.2.211
+spec:
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: vector-reranker
+  ports:
+    - name: http
+      port: 8089
+      targetPort: http

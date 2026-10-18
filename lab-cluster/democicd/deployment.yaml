@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: democicd
+  namespace: demo-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: democicd
+  template:
+    metadata:
+      labels:
+        app: democicd
+    spec:
+      imagePullSecrets:
+        - name: registry-creds
+      containers:
+        - name: democicd
+          image: harbor.example.com/demo/democicd@sha256:174d4e395377aaf588d00f62690324c3938386550b7ec7e2478b56fbf074834d
+          ports:
+            - containerPort: 8080
+          env:
+            - name: APP_VERSION
+              value: "6b006796"
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi

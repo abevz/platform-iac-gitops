@@ -1,0 +1,66 @@
+# Query-time cross-encoder for the vault vector search (utils/vector-indexer/reranker-service).
+# Runs on the GPU node; the GPU is time-sliced, so this pod shares VRAM with other GPU pods.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vector-reranker
+  namespace: vector
+spec:
+  replicas: 1
+  # One GPU slot per pod and a hostPath model cache: never run old and new side by side
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: vector-reranker
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: vector-reranker
+    spec:
+      # RuntimeClass nvidia adds the GPU node selector and the nvidia.com/gpu toleration
+      runtimeClassName: nvidia
+      containers:
+        - name: reranker
+          image: harbor.example.com/library/vector-reranker@sha256:9243fc45243ec798d54aa205b066113087dccb3f0b54a1485635625d8c9ada23
+          ports:
+            - name: http
+              containerPort: 8089
+          envFrom:
+            - configMapRef:
+                name: vector-reranker
+            # RERANKER_API_TOKEN; created outside git (see README.md)
+            - secretRef:
+                name: vector-reranker
+          env:
+            - name: NVIDIA_DRIVER_CAPABILITIES
+              value: compute,utility
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 5
+            failureThreshold: 6
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 5
+            failureThreshold: 60
+          resources:
+            requests:
+              cpu: 500m
+              memory: 2Gi
+            limits:
+              cpu: "4"
+              memory: 6Gi
+              nvidia.com/gpu: 1
+          volumeMounts:
+            - name: hf-cache
+              mountPath: /var/cache/huggingface
+      volumes:
+        # Model cache on the GPU node, so a restart does not download the model again
+        - name: hf-cache
+          hostPath:
+            path: /var/lib/models/vector-reranker
+            type: Directory

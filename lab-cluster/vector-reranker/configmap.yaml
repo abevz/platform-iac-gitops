@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vector-reranker
+  namespace: vector
+data:
+  RERANKER_MODEL: cross-encoder/mmarco-mMiniLMv2-L12-H384-v1
+  RERANKER_REVISION: 1427fd652930e4ba29e8149678df786c240d8825
+  RERANKER_DEVICE: cuda
+  RERANKER_THREADS: "4"
+  RERANKER_BATCH_SIZE: "8"
+  RERANKER_MAX_LENGTH: "512"
+  RERANKER_MAX_CANDIDATES: "600"
+  RERANKER_MAX_SECONDS: "60"
